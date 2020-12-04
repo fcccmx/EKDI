@@ -36,42 +36,37 @@ public class Musikspieler {
 		kanal1Array[0] = "1";
 		kanal1Array[1] = "2";
 		
-		while(true) {
-			if ( state.equals("PAUSE")) {
-				if(scanner.next() == "P") {
-					state = "PLAY";
-				}
-				    try {
-						Thread.sleep(50);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						System.out.println("kann nicht warten");
-					}
-				    
-				
-			}
+//		while(true) {
+//			if ( state.equals("PAUSE")) {
+//				if(scanner.next() == "P") {
+//					state = "PLAY";
+//				}
+//				    try {
+//						Thread.sleep(50);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//						System.out.println("kann nicht warten");
+//					}
+//				    
+//				
+//			}
 			if (state.equals("PLAY")) {
 //				if(scanner.next() == "P") {
 //					state = "PAUSE";
 //				}
 			while(aktTakt < 64 ) {
 				Muzak kanal1Spieler = new Muzak();
-				String audioFilePath = "C:\\Users\\jsste\\Downloads\\anhang(2)\\anhang\\tonauswahl\\" + kanal1Array[aktTakt] + ".wav";
-				kanal1Spieler.play(audioFilePath);	
-				Muzak kanal2Spieler = new Muzak();
-				audioFilePath = "C:\\Users\\jsste\\Downloads\\anhang(2)\\anhang\\tonauswahl\\" + kanal2Array[aktTakt] + ".wav";
-				kanal2Spieler.play(audioFilePath);	
-				Muzak kanal3Spieler = new Muzak();
-				audioFilePath = "C:\\Users\\jsste\\Downloads\\anhang(2)\\anhang\\tonauswahl\\" + kanal3Array[aktTakt] + ".wav";
-				kanal3Spieler.play(audioFilePath);	
-				Muzak kanal4Spieler = new Muzak();
-				audioFilePath = "C:\\Users\\jsste\\Downloads\\anhang(2)\\anhang\\tonauswahl\\" + kanal4Array[aktTakt] + ".wav";
-				kanal4Spieler.play(audioFilePath);	
+				String audioFilePath1 = "C:\\Users\\andre\\Desktop\\anhang\\tonauswahl\\" + kanal1Array[aktTakt] + ".wav";
+				String audioFilePath2 = "C:\\Users\\andre\\Desktop\\anhang\\tonauswahl\\" + kanal2Array[aktTakt] + ".wav";
+				String audioFilePath3 = "C:\\Users\\andre\\Desktop\\anhang\\tonauswahl\\" + kanal3Array[aktTakt] + ".wav";
+				String audioFilePath4 = "C:\\Users\\andre\\Desktop\\anhang\\tonauswahl\\" + kanal4Array[aktTakt] + ".wav";
+				
+				kanal1Spieler.play(audioFilePath1, audioFilePath2,audioFilePath3,audioFilePath4);	
 				 try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 						System.out.println("kann nicht warten");
 					}
@@ -81,5 +76,5 @@ public class Musikspieler {
 		}
 	}
 
-}
+
 
