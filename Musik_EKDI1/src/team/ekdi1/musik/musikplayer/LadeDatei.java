@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class LadeDatei {
 
-	public static String[][] csvRead(String csvFilePath) {
+	public String[][] csvRead(String csvFilePath) {
 		String line="";
 		String SpiltBy=",";
 		String[][] KanalArray=new String[100][4];
@@ -26,8 +26,7 @@ public class LadeDatei {
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
-				
-	
+					
 //		for (int i= 0; i<takt; i++) {
 //			for (int j = 0; j < KanalArray[takt].length; j++) {
 //				System.out.print(KanalArray[i][j]+",");	
@@ -46,7 +45,7 @@ public class LadeDatei {
 		}
 	}
 	
-	public static void main(String[] args) {
-		csvRead("C:\\Users\\Ïº½È\\Desktop\\example.csv");
-	}
+//	public static void main(String[] args) {
+//		csvRead("example.csv");
+//	}
 }
