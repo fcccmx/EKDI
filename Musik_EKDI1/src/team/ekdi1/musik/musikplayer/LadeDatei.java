@@ -36,16 +36,16 @@ public class LadeDatei {
 			e.printStackTrace();
 		}
 		
-		System.out.print(MusikArray);
-		System.out.println(takt);
-		int a=1;
-		for (String i:MusikArray) {	
-			System.out.print(i+",");
-			if (a%4==0) {
-				System.out.println();
-			}
-			a++;
-		}
+//		System.out.print(MusikArray);
+//		System.out.println(takt);
+//		int a=1;
+//		for (String i:MusikArray) {	
+//			System.out.print(i+",");
+//			if (a%4==0) {
+//				System.out.println();
+//			}
+//			a++;
+//		}
 		
 		return MusikArray;
 	}
@@ -71,18 +71,18 @@ public class LadeDatei {
 		}
 	}
 	
-	public static void main(String[] args) {
-		LadeDatei test1=new LadeDatei();
-		test1.csvRead("C:\\Users\\Ïº½È\\Desktop\\example.csv");
-		LadeDatei test2=new LadeDatei();
-		ArrayList<String> s=new ArrayList<String>();
-		s.add("E2");
-		s.add("B2");
-		s.add("C2");
-		s.add("E8");
-		s.add("H2");
-		test2.csvWrite(s, "C:\\Users\\Ïº½È\\Desktop\\e.csv");
-		test1.csvRead("C:\\Users\\Ïº½È\\Desktop\\e.csv");
-		}
+//	public static void main(String[] args) {
+//		LadeDatei test1=new LadeDatei();
+//		test1.csvRead("C:\\Users\\Ïº½È\\Desktop\\example.csv");
+//		LadeDatei test2=new LadeDatei();
+//		ArrayList<String> s=new ArrayList<String>();
+//		s.add("E2");
+//		s.add("B2");
+//		s.add("C2");
+//		s.add("E8");
+//		s.add("H2");
+//		test2.csvWrite(s, "C:\\Users\\Ïº½È\\Desktop\\e.csv");
+//		test1.csvRead("C:\\Users\\Ïº½È\\Desktop\\e.csv");
+//		}
 	
 }
