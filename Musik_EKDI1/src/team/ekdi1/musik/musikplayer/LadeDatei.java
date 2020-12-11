@@ -36,7 +36,7 @@ public class LadeDatei {
 			e.printStackTrace();
 		}
 		
-//		System.out.print(MusikArray);
+//		System.out.println(MusikArray);
 //		System.out.println(takt);
 //		int a=1;
 //		for (String i:MusikArray) {	
