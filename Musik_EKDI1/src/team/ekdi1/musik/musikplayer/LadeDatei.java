@@ -9,6 +9,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class LadeDatei {
 
@@ -71,9 +75,38 @@ public class LadeDatei {
 		}
 	}
 	
+	
+	public String[][] csvRead2DArray(String path) {
+
+		String[][] komplettArray = new String[64][4];
+
+		Path pathToFile = Paths.get(path);
+		try (BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.US_ASCII)) {
+			String line = br.readLine();
+			int i = 0;
+			while(line != null) {
+				line.replaceAll("\\s+","");
+				for (int j = 0; j < 4; j++) {
+					komplettArray[i][j] = line.split(",")[j];
+				}
+				i++;
+				line = br.readLine();
+
+			}
+
+
+			return komplettArray;
+
+
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			return null;
+		}
+
+	}
 //	public static void main(String[] args) {
 //		LadeDatei test1=new LadeDatei();
-//		test1.csvRead("C:\\Users\\Ïº½È\\Desktop\\example.csv");
+//		test1.csvRead("C:\\Users\\Ïºï¿½ï¿½\\Desktop\\example.csv");
 //		LadeDatei test2=new LadeDatei();
 //		ArrayList<String> s=new ArrayList<String>();
 //		s.add("E2");
@@ -81,8 +114,8 @@ public class LadeDatei {
 //		s.add("C2");
 //		s.add("E8");
 //		s.add("H2");
-//		test2.csvWrite(s, "C:\\Users\\Ïº½È\\Desktop\\e.csv");
-//		test1.csvRead("C:\\Users\\Ïº½È\\Desktop\\e.csv");
+//		test2.csvWrite(s, "C:\\Users\\Ïºï¿½ï¿½\\Desktop\\e.csv");
+//		test1.csvRead("C:\\Users\\Ïºï¿½ï¿½\\Desktop\\e.csv");
 //		}
 	
 }

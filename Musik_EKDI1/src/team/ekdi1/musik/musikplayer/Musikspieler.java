@@ -1,80 +1,62 @@
 package team.ekdi1.musik.musikplayer;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 import java.util.Scanner;
 
+
 public class Musikspieler {
+
+	private String[][] liedArray;
+
+
+	private int getLiedArrayLength() {
+		for (int i = 0; i < 64; i++) {
+			if (this.liedArray[0][i] == null) {
+				return i + 1;
+			}
+		}
+		return 64;
+
+	}
+
+	public void MusikspielerSchleife() {
+		int aktTakt = 0;
+		String state = "PLAY";
+		LadeDatei fL = new LadeDatei();
+		System.out.println(System.getProperty("user.dir"));
+		this.liedArray = fL.csvRead2DArray("C:\\Users\\jsste\\Desktop\\song2.txt");
+
+		while(aktTakt < 3 ) {
+			Muzak kanal1Spieler = new Muzak();
+			String audioFilePath1 = "C:\\Users\\jsste\\Downloads\\anhang(2)\\anhang\\tonauswahl\\" + this.liedArray[aktTakt][0] + ".wav";
+			String audioFilePath2 = "C:\\Users\\jsste\\Downloads\\anhang(2)\\anhang\\tonauswahl\\" + this.liedArray[aktTakt][1] + ".wav";
+			String audioFilePath3 = "C:\\Users\\jsste\\Downloads\\anhang(2)\\anhang\\tonauswahl\\" + this.liedArray[aktTakt][2] + ".wav";
+			String audioFilePath4 = "C:\\Users\\jsste\\Downloads\\anhang(2)\\anhang\\tonauswahl\\" + this.liedArray[aktTakt][3] + ".wav";
+
+			kanal1Spieler.play(audioFilePath1, audioFilePath2,audioFilePath3,audioFilePath4);	
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+
+				e.printStackTrace();
+				System.out.println("kann nicht warten");
+			}
+			aktTakt++;
+		}
+
+	}
 
 
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		String[] kanal1Array = new String[64];
-		String[] kanal2Array = new String[64];
-		String[] kanal3Array = new String[64];
-		String[] kanal4Array = new String[64];
-		
-		int aktTakt = 0;
-		
-		String state = "PLAY";
-		
-		Scanner scanner = new Scanner(System.in);
-		
-		for (int i = 0; i < 64; i++) {
-			kanal1Array[i] = "1";
-		}
-		
-		for (int i = 0; i < 64; i++) {
-			kanal2Array[i] = "2";
-		}
-		
-		for (int i = 0; i < 64; i++) {
-			kanal3Array[i] = "3";
-		}
-		for (int i = 0; i < 64; i++) {
-			kanal4Array[i] = "4";
-		}
-		kanal1Array[0] = "1";
-		kanal1Array[1] = "2";
-		
-//		while(true) {
-//			if ( state.equals("PAUSE")) {
-//				if(scanner.next() == "P") {
-//					state = "PLAY";
-//				}
-//				    try {
-//						Thread.sleep(50);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//						System.out.println("kann nicht warten");
-//					}
-//				    
-//				
-//			}
-			if (state.equals("PLAY")) {
-//				if(scanner.next() == "P") {
-//					state = "PAUSE";
-//				}
-			while(aktTakt < 64 ) {
-				Muzak kanal1Spieler = new Muzak();
-				String audioFilePath1 = "C:\\Users\\andre\\Desktop\\anhang\\tonauswahl\\" + kanal1Array[aktTakt] + ".wav";
-				String audioFilePath2 = "C:\\Users\\andre\\Desktop\\anhang\\tonauswahl\\" + kanal2Array[aktTakt] + ".wav";
-				String audioFilePath3 = "C:\\Users\\andre\\Desktop\\anhang\\tonauswahl\\" + kanal3Array[aktTakt] + ".wav";
-				String audioFilePath4 = "C:\\Users\\andre\\Desktop\\anhang\\tonauswahl\\" + kanal4Array[aktTakt] + ".wav";
-				
-				kanal1Spieler.play(audioFilePath1, audioFilePath2,audioFilePath3,audioFilePath4);	
-				 try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						
-						e.printStackTrace();
-						System.out.println("kann nicht warten");
-					}
-				 aktTakt++;
-			}
-			}
-		}
+		Musikspieler mS = new Musikspieler();
+		mS.MusikspielerSchleife();
+
 	}
+}
 
 
 
