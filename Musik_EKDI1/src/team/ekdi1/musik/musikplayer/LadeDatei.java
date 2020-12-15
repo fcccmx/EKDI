@@ -32,7 +32,7 @@ public class LadeDatei {
 				//KanalArray[takt]=line.split(SpiltBy);
 				s=line.split(SpiltBy);
 				for (int i = 0; i < 4 ; i++) {
-					if (i-s.length<0) {
+					if (i-s.length<0) {//when s array length is less than 4, add "" to Arraylist
 						MusikArray.add(s[i]);
 					}
 					else {
@@ -45,16 +45,16 @@ public class LadeDatei {
 			e.printStackTrace();
 		}
 		
-		System.out.println(MusikArray);
-		System.out.println(takt);
-		int a=1;
-		for (String i:MusikArray) {	
-			System.out.print(i+",");
-			if (a%4==0) {
-				System.out.println();
-			}
-			a++;
-		}
+//		System.out.println(MusikArray);
+//		System.out.println(takt);
+//		int a=1;
+//		for (String i:MusikArray) {	
+//			System.out.print(i+",");
+//			if (a%4==0) {
+//				System.out.println();
+//			}
+//			a++;
+//		}
 		
 		return MusikArray;
 	}
@@ -109,9 +109,9 @@ public class LadeDatei {
 		}
 
 	}
-	public static void main(String[] args) {
-		LadeDatei test1=new LadeDatei();
-		test1.csvRead("C:\\Users\\Ïº½È\\Desktop\\example.csv");
+//	public static void main(String[] args) {
+//		LadeDatei test1=new LadeDatei();
+//		test1.csvRead("C:\\Users\\Ïº½È\\Desktop\\example.csv");
 //		String[][] s=test1.csvRead2DArray("C:\\Users\\Ïº½È\\Desktop\\example.csv");
 //		for (int i = 0; i < 64; i++) {
 //			for (int j = 0; j < 4; j++) {
@@ -128,6 +128,6 @@ public class LadeDatei {
 //		s.add("H2");
 //		test2.csvWrite(s, "C:\\Users\\Ïºï¿½ï¿½\\Desktop\\e.csv");
 //		test1.csvRead("C:\\Users\\Ïºï¿½ï¿½\\Desktop\\e.csv");
-		}
+//		}
 	
 }
