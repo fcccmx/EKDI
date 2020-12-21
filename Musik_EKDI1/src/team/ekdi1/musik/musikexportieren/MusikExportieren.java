@@ -12,12 +12,12 @@ import team.ekdi1.musik.musikplayer.LadeDatei;
 
 public class MusikExportieren {
 	
-	public void wavKomposition(String csvPath) {
-		ArrayList<String> MusikArray;
-		LadeDatei Musik=new LadeDatei();
-		MusikArray=Musik.csvRead(csvPath);
-		
-	}
+//	public void wavKomposition(String csvPath) {
+//		ArrayList<String> MusikArray;
+//		LadeDatei Musik=new LadeDatei();
+//		MusikArray=Musik.csvRead(csvPath);
+//		
+//	}
 	
 	public static boolean WavToMp3(String inPath,String outFile) {
 		boolean status =false;
@@ -52,7 +52,7 @@ public class MusikExportieren {
 	
 //	public static void main(String[] args){
 //		WavToMp3
-//		("F:\\I_Kompetenzen WiSe 2021_20201012_1013\\Teil B\\Anhang.zip (Stand 17.09.20)\\anhang\\tonauswahl\\1980s-Casio-Piano-C5.wav", 
+//		("C:\\\\Users\\\\Ïº½È\\\\git\\\\EKDI\\\\tonauswahl\\\\1980s-Casio-Piano-C5.wav", 
 //				"C:\\Users\\Ïº½È\\Desktop\\1980s-Casio-Piano-C5.mp3");
 //		
 //	}
