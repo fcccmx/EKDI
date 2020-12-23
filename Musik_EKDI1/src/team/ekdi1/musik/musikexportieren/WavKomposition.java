@@ -39,11 +39,11 @@ public class WavKomposition {
 	
 	public void updateFileHead(String output,boolean ifUpdate) throws IOException {
 		RandomAccessFile raf=new RandomAccessFile(output, "rw");
-		//打开一个文件通道
+		//Open a file channel
 		FileChannel channel=raf.getChannel();
-		//映射文件中的某一部分数据以读写模式到内存中
+		//Mapping a part of the data in a file to memory in read and write mode
 		MappedByteBuffer buffer= channel.map(FileChannel.MapMode.READ_WRITE, 0, 44);
-		//修改头部文件
+		//Modify the header file
 		if (ifUpdate) {
 			byte[] head1=byteToByte(intToByteArray(headLength1));
 			byte[] head2=byteToByte(intToByteArray(headLength2));
@@ -56,7 +56,7 @@ public class WavKomposition {
 	        buffer.put(41, head2[1]);
 	        buffer.put(42, head2[2]);
 	        buffer.put(43, head2[3]);
-	        buffer.force();//强制输出，在buffer中的改动生效到文件
+	        buffer.force();//Force output, changes in the buffer to take effect in the file
 	        
 	        
 		}else {
@@ -95,7 +95,7 @@ public class WavKomposition {
 			}
 			byte[] tempBuffer=new byte[1024];
 			int nRed=0;
-			//将全部内容复制到output.wav
+			//Copy the entire contents to output.wav
 			while ((nRed=is.read(tempBuffer))!=-1) {
 				os.write(tempBuffer,0,nRed);
 				os.flush();		
@@ -116,16 +116,16 @@ public class WavKomposition {
 		updateFileHead(output, true);
 	}
 
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		String output="C:\\Users\\虾饺\\Desktop\\new.wav";
-		LadeDatei a=new LadeDatei();
-		ArrayList<String> ar=new ArrayList<String>();
-		ar=a.csvRead("C:\\Users\\虾饺\\Desktop\\example.csv");
-		WavKomposition test=new WavKomposition();
-		test.mergeWav(ar, output);
-		System.out.println("ooooooooooops");
-		
-	}
+//	public static void main(String[] args) throws IOException {
+//		// TODO Auto-generated method stub
+//		String output="C:\\Users\\虾饺\\Desktop\\new.wav";
+//		LadeDatei a=new LadeDatei();
+//		ArrayList<String> ar=new ArrayList<String>();
+//		ar=a.csvRead("C:\\Users\\虾饺\\Desktop\\example.csv");
+//		WavKomposition test=new WavKomposition();
+//		test.mergeWav(ar, output);
+//		System.out.println("ooooooooooops");
+//		
+//	}
 
 }
