@@ -14,7 +14,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Muzak /*implements LineListener*/ {
-
+	public int vier = 4;
     /**
      * This is an example program that demonstrates how to play back an audio file
      * using the Clip in Java Sound API.
