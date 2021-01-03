@@ -74,7 +74,7 @@ public class Muzak /*implements LineListener*/ {
 	    while (!playCompleted) {
 		// wait for the playback completes
 		try {
-		    Thread.sleep(1500);
+		    Thread.sleep(1100);
 		    playCompleted = true;
 		    //audioClip2.start();
 		} catch (InterruptedException ex) {

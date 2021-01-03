@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.nio.charset.StandardCharsets;
@@ -81,12 +82,14 @@ public class LadeDatei {
 	}
 	
 	
-	public String[][] csvRead2DArray(String path) {
+	public String[][] csvRead2DArray(String fileName) {
 
 		String[][] komplettArray = new String[64][4];
 
-		Path pathToFile = Paths.get(path);
-		try (BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.US_ASCII)) {
+		URL path = Musikspieler.class.getResource(fileName);
+		File f = new File(path.getFile());
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(f));
 			String line = br.readLine();
 			int i = 0;
 			while(line != null) {
@@ -98,7 +101,7 @@ public class LadeDatei {
 				line = br.readLine();
 
 			}
-
+			br.close();
 
 			return komplettArray;
 
@@ -111,8 +114,8 @@ public class LadeDatei {
 	}
 //	public static void main(String[] args) {
 //		LadeDatei test1=new LadeDatei();
-//		test1.csvRead("C:\\Users\\Ïº½È\\Desktop\\example.csv");
-//		String[][] s=test1.csvRead2DArray("C:\\Users\\Ïº½È\\Desktop\\example.csv");
+//		test1.csvRead("C:\\Users\\Ïºï¿½ï¿½\\Desktop\\example.csv");
+//		String[][] s=test1.csvRead2DArray("C:\\Users\\Ïºï¿½ï¿½\\Desktop\\example.csv");
 //		for (int i = 0; i < 64; i++) {
 //			for (int j = 0; j < 4; j++) {
 //				System.out.print(s[i][j]+" ");
