@@ -11,11 +11,10 @@ public class StatusAbfrage extends Thread{
 
 		while(true) {
 			
-			System.out.println("1. pause"); 
-            System.out.println("2. resume"); 
-            System.out.println("3. restart"); 
-            System.out.println("4. stop"); 
-            System.out.println("5. Jump to specific time"); 
+			System.out.println("1. Pause"); 
+            System.out.println("2. Fortsetzen"); 
+            System.out.println("3. Von vorne"); 
+            System.out.println("4. Stop"); 
             this.status = sc.nextInt();
 		}
 		

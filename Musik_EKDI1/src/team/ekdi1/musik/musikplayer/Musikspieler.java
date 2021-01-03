@@ -29,7 +29,7 @@ public class Musikspieler {
 		
 		this.liedArray = fL.csvRead2DArray("song2.txt");
 
-		while(aktTakt < 4 && play == true) {
+		while(aktTakt < 20 && play == true) {
 			Muzak kanal1Spieler = new Muzak();
 			String audioFilePath1 = System.getProperty("user.dir") +"\\tonauswahl\\" + this.liedArray[aktTakt][0] + ".wav";
 			String audioFilePath2 = System.getProperty("user.dir") +"\\tonauswahl\\" + this.liedArray[aktTakt][1] + ".wav";
