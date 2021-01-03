@@ -3,7 +3,7 @@ package team.ekdi1.musik.musikplayer;
 import java.util.Scanner;
 
 public class StatusAbfrage extends Thread{
-	public int status = 0;
+	public String status = "P";
 
 	@Override
 	public void run() {
@@ -11,16 +11,16 @@ public class StatusAbfrage extends Thread{
 
 		while(true) {
 			
-			System.out.println("1. Pause"); 
-            System.out.println("2. Fortsetzen"); 
-            System.out.println("3. Von vorne"); 
-            System.out.println("4. Stop"); 
-            this.status = sc.nextInt();
+			System.out.println("P. Pause"); 
+            System.out.println("F. Fortsetzen"); 
+            System.out.println("V. Von vorne"); 
+            System.out.println("S. Stop"); 
+            this.status = sc.next();
 		}
 		
 	}
 	
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
