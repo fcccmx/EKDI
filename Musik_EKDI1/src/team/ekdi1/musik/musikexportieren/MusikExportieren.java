@@ -1,12 +1,16 @@
 package team.ekdi1.musik.musikexportieren;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import it.sauronsoftware.jave.AudioAttributes;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.EncodingAttributes;
+import it.sauronsoftware.jave.FFMPEGLocator;
 import it.sauronsoftware.jave.InputFormatException;
 import team.ekdi1.musik.musikplayer.LadeDatei;
 
@@ -32,6 +36,7 @@ public class MusikExportieren {
 		}
 		return status;
 	}
+	
 
 	private static File excute(File source, String outFile) 
 			throws IllegalArgumentException, InputFormatException, EncoderException {
@@ -50,10 +55,13 @@ public class MusikExportieren {
 		
 	}
 	
-//	public static void main(String[] args){
+
+	
+	public static void main(String[] args){
 //		WavToMp3
-//		("C:\\\\Users\\\\Ïº½È\\\\git\\\\EKDI\\\\tonauswahl\\\\1980s-Casio-Piano-C5.wav", 
-//				"C:\\Users\\Ïº½È\\Desktop\\1980s-Casio-Piano-C5.mp3");
-//		
-//	}
+//		("C:\\Users\\Ïº½È\\Desktop\\new3.wav", 
+//				"C:\\Users\\Ïº½È\\Desktop\\new3.mp3");
+//		changechannel("C:\\Users\\Ïº½È\\Desktop\\tonauswahl\\C5.wav", "C:\\Users\\Ïº½È\\Desktop\\C55.wav",1);
+		
+	}
 }
