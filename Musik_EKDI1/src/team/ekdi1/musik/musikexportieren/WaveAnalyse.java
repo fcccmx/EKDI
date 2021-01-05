@@ -75,7 +75,7 @@ public class WaveAnalyse {
 		public void ShowInfo1(){
 			System.out.println("-----------------WAVE HEAD-------------------");
 			System.out.println("ChunkID  "+Integer.toHexString(ChunkID));
-			System.out.println("ChunkSize  "+Integer.toHexString(ChunkSize));
+			System.out.println("ChunkSize  "+Integer.toHexString(ChunkSize)+"  "+ChunkSize);
 			System.out.println("ChunkFormat  "+Integer.toHexString(ChunkFormat));
 			System.out.println("-----------------SubChunk1-------------------");
 			System.out.println("SubChunk1  "+Integer.toHexString(SubChunk1));
@@ -94,12 +94,13 @@ public class WaveAnalyse {
 		
 		public static void main(String[] args){
 			WaveAnalyse test1=new WaveAnalyse();
-			test1.Analyse("C:\\Users\\Ïº½È\\git\\EKDI\\tonauswahl\\1980s-Casio-Piano-C5.wav");
+			test1.Analyse("C:\\Users\\Ïº½È\\Desktop\\tonauswahl\\TC5.wav");
 			test1.ShowInfo1();
-			File test2=new File("C:\\\\Users\\\\Ïº½È\\\\git\\\\EKDI\\\\tonauswahl\\\\1980s-Casio-Piano-C5.wav");
+			File test2=new File("C:\\Users\\Ïº½È\\Desktop\\AC2.wav");
 			Encoder encoder = new Encoder();
 			try {
 				MultimediaInfo t=encoder.getInfo(test2);
+				System.out.println(t.getAudio().getChannels());
 				System.out.println("----------------------------------------------");
 				System.out.println(t);
 			} catch (Exception e) {
@@ -107,10 +108,7 @@ public class WaveAnalyse {
 				e.getStackTrace();
 			}
 			System.out.println("----------------------------------------------");
-			WaveAnalyse test3=new WaveAnalyse();
-			test3.Analyse("C:\\Users\\Ïº½È\\Desktop\\new.wav");
-			test3.ShowInfo1();
-		
+
 		}
 	}
 
