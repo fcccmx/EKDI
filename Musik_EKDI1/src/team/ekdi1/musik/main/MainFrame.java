@@ -9,6 +9,8 @@ import java.awt.Frame;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -23,6 +25,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -48,6 +52,7 @@ public class MainFrame extends JFrame{
 	String[] columnNames= {"Kanal1","Kanal2","Kanal3","Kanal4"};
 	String csvFilePath;
     ArrayList<String> musikArray;
+    String oldCellValue=null;
 //    Vector vcolumnNames=new Vector();
 //    Vector vData=new Vector();
 
@@ -104,7 +109,8 @@ public class MainFrame extends JFrame{
 //		vcolumnNames.add("Kanal4");
 		DefaultTableModel model=new DefaultTableModel(columnNames,0);
 		jT=new JTable(model);
-//		jT.addMouseListener();
+//		jT.addMouseListener(new mouseClick_Listener());
+//		jT.getModel().addTableModelListener(new tablecChanged_Listener());
 		jScrollPanel.getViewport().add(jT);
 		jScrollPanel.setBounds(30, 100, 500, 300);
 		panel1.add(jScrollPanel);
@@ -169,7 +175,10 @@ public class MainFrame extends JFrame{
 		
 	}
 	
-	
+	/**
+	 * Click the editor button and jtable will be editable
+	 * The modified values are returned to the arraylist
+	 */
 	class jButton3_editor_Listener implements ActionListener{
 
 		@Override
@@ -178,14 +187,66 @@ public class MainFrame extends JFrame{
 			//jT.setEnabled(true);
 			jT.setEnabled(true);
 			jT.setBackground(Color.white);
-			
+			jT.addMouseListener(new mouseClick_Listener());
+			jT.getModel().addTableModelListener(new tablecChanged_Listener());
 			
 		}
 		
 	}
 	
-  
+	class tablecChanged_Listener implements TableModelListener{
+
+		@Override
+		public void tableChanged(TableModelEvent e) {
+			// TODO Auto-generated method stub
+			if (e.getType()==TableModelEvent.UPDATE) {
+				String newCellValue=jT.getValueAt(e.getLastRow(), e.getColumn()).toString();
+				System.out.println("new:"+newCellValue+" r:"+e.getLastRow()+" c:"+e.getColumn());
+				if(!newCellValue.equals(oldCellValue)){
+					musikArray.set(e.getLastRow()*e.getColumn()-1, newCellValue);
 	
+				}
+			}
+		}
+		
+	}
+	
+	class mouseClick_Listener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			// Record the data in the cell before 
+			// entering the edit state Auto-generated method stub
+			oldCellValue = jT.getValueAt(jT.getSelectedRow(),jT.getSelectedColumn()).toString();
+			System.out.println("old:"+oldCellValue+" r:"+jT.getSelectedRow()+" c:"+jT.getSelectedColumn());
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 }
 
 
