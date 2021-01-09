@@ -17,7 +17,10 @@ import java.nio.file.Paths;
 
 public class LadeDatei {
 
-	public ArrayList<String> csvRead(String csvFilePath) {
+	private static BufferedReader csvFile;
+
+
+	public static ArrayList<String> csvRead(String csvFilePath) {
 		String line="";
 		String SpiltBy=",";
 		//String[][] KanalArray=new String[100][4];
@@ -44,23 +47,12 @@ public class LadeDatei {
 			}
 		}catch (IOException e) {
 			e.printStackTrace();
-		}
-		
-//		System.out.println(MusikArray);
-//		System.out.println(takt);
-//		int a=1;
-//		for (String i:MusikArray) {	
-//			System.out.print(i+",");
-//			if (a%4==0) {
-//				System.out.println();
-//			}
-//			a++;
-//		}
-		
+		}		
 		return MusikArray;
 	}
 	
-	public void csvWrite(ArrayList<String> MusikArray,String csvFilePath) {
+	public static void csvWrite(ArrayList<String> MusikArray,String csvFilePath) {
+		
 		try {
 			File outFile=new File(csvFilePath);
 			if (!outFile.exists()) {
@@ -78,6 +70,16 @@ public class LadeDatei {
 			csvFile.flush();
 		}catch (IOException e) {
 			e.printStackTrace();
+		}finally {
+			if (csvFile!=null) {
+				try {
+					csvFile.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+					e2.printStackTrace();
+				}
+				
+			}
 		}
 	}
 	
@@ -112,25 +114,5 @@ public class LadeDatei {
 		}
 
 	}
-//	public static void main(String[] args) {
-//		LadeDatei test1=new LadeDatei();
-//		test1.csvRead("C:\\Users\\Ϻ��\\Desktop\\example.csv");
-//		String[][] s=test1.csvRead2DArray("C:\\Users\\Ϻ��\\Desktop\\example.csv");
-//		for (int i = 0; i < 64; i++) {
-//			for (int j = 0; j < 4; j++) {
-//				System.out.print(s[i][j]+" ");
-//			}
-//			System.out.println();
-//		}
-//		LadeDatei test2=new LadeDatei();
-//		ArrayList<String> s=new ArrayList<String>();
-//		s.add("E2");
-//		s.add("B2");
-//		s.add("C2");
-//		s.add("E8");
-//		s.add("H2");
-//		test2.csvWrite(s, "C:\\Users\\Ϻ��\\Desktop\\e.csv");
-//		test1.csvRead("C:\\Users\\Ϻ��\\Desktop\\e.csv");
-//		}
 	
 }
