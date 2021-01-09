@@ -40,7 +40,7 @@ public class MainFrame extends JFrame{
 	Scanner Status=new Scanner(System.in);
 	JPanel panel1=new JPanel();
 	JScrollPane jScrollPanel= new JScrollPane();
-	JTextField playStatus=new JTextField();
+	JTextField playStatus=new JTextField("PlayStatus");
 	JLabel jL1_states=new JLabel();
 	JTable jT=new JTable();
 	JTableHeader jTableHeader1=jT.getTableHeader();
