@@ -5,6 +5,16 @@ import java.util.Scanner;
 public class StatusAbfrage extends Thread{
 	public String status = "P";
 
+	
+	StatusAbfrage(String status) {
+		this.status=status;
+	}
+	
+	StatusAbfrage() {
+		
+	}
+	
+
 	@Override
 	public void run() {
         Scanner sc = new Scanner(System.in); 

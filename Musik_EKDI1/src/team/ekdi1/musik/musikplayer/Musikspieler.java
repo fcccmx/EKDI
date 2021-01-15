@@ -1,16 +1,16 @@
 package team.ekdi1.musik.musikplayer;
 
+import java.util.ArrayList;
 
-public class Musikspieler {
-	StatusAbfrage statusAbfrage = new StatusAbfrage();
-	
-	public Musikspieler() {
-		this.statusAbfrage.start();
-	}
+public class Musikspieler{
+	StatusAbfrage statusAbfrage = new StatusAbfrage();	
 
 	private String[][] liedArray;
 
-
+	public Musikspieler(String status) {
+		this.statusAbfrage = new StatusAbfrage(status);
+	}
+	
 	private int getLiedArrayLength() {
 		for (int i = 0; i < 64; i++) {
 			if (this.liedArray[0][i] == null) {
@@ -26,6 +26,7 @@ public class Musikspieler {
 		int aktTakt = 0;
 		String state = "PLAY";
 		LadeDatei fL = new LadeDatei();	
+		
 		
 		this.liedArray = fL.csvRead2DArray("song2.txt");
 
@@ -69,7 +70,7 @@ public class Musikspieler {
 
 
 	public static void main(String[] args) {
-		Musikspieler mS = new Musikspieler();
+		Musikspieler mS = new Musikspieler("F");
 		mS.MusikspielerSchleife();
 
 	}
