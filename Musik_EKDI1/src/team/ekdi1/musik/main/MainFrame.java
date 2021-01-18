@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
@@ -32,6 +33,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
+import team.ekdi1.musik.musikeditor.Editor;
+import team.ekdi1.musik.musikexportieren.MusikExportieren;
 import team.ekdi1.musik.musikplayer.LadeDatei;
 import team.ekdi1.musik.musikplayer.Musikspieler;
 
@@ -46,9 +49,11 @@ public class MainFrame extends JFrame{
 	JLabel jL2=new JLabel("F. Fortsetzen");
 	JLabel jL3=new JLabel("V. Von vorne");
 	JLabel jL4=new JLabel("S. Stop");
+	JLabel jL5_musikName=new JLabel();
+	JLabel jL6_zeile=new JLabel();
 	JTable jT=new JTable();
 	JTableHeader jTableHeader1=jT.getTableHeader();
-	JButton jB1_openCSV=new JButton("csvFile-oeffnen");
+	JButton jB1_openCSV=new JButton("csvFile-öffnen");
 	JButton jB2_storeCSV=new JButton("csvFile-speichern");
 	JButton jB3_editor=new JButton("Editor");
 	JButton jB4_kompositon=new JButton("kompositon");
@@ -56,10 +61,12 @@ public class MainFrame extends JFrame{
 	JButton jB6_addline=new JButton("Eine Zeile hinzufügen");
 	JButton jB7_deleteline=new JButton("Eine Zeile löschen");
 	String[] columnNames= {"Kanal1","Kanal2","Kanal3","Kanal4"};
+	String[] emptyLine= {"","","",""};
 	String[][] komplettArray=new String[64][4];
 	String csvFilePath;
-    ArrayList<String> musikArray;
+    ArrayList<String> musikArray=new ArrayList<String>();
     String oldCellValue=null;
+    String musikName=new String();
 
 
     
@@ -91,21 +98,25 @@ public class MainFrame extends JFrame{
 		jL2.setBounds(50,470,200,30);
 		jL3.setBounds(50,490,200,30);
 		jL4.setBounds(50,510,200,30);
+		jL5_musikName.setBounds(50, 40, 300, 50);
+		jL6_zeile.setBounds(450, 40, 100, 50);
 		
-		jB1_openCSV.setBounds(600, 100, 150, 30);
+		jB1_openCSV.setBounds(595, 100, 150, 30);
 		jB1_openCSV.addActionListener(new jButton1_openCSVFile_Listener());
 		
-		jB2_storeCSV.setBounds(600, 180, 150, 30);
+		jB2_storeCSV.setBounds(595, 180, 150, 30);
 		jB2_storeCSV.addActionListener(new JButton2_storeCSVFile_Listener());
 		
 		jB3_editor.setBounds(180, 420, 100, 30);
 		jB3_editor.addActionListener(new jButton3_editor_Listener());
-		jB6_addline.setBounds(210, 470, 180, 30);
-		jB7_deleteline.setBounds(210, 520, 180, 30);
+		jB6_addline.setBounds(180, 460, 160, 30);
+		jB6_addline.addActionListener(new jB6_addline_Listener());
+		jB7_deleteline.setBounds(180, 500, 160, 30);
+		jB7_deleteline.addActionListener(new jB7_deleteline_Listener());
 		
-		jB4_kompositon.setBounds(310,420, 100, 30);
+		jB4_kompositon.setBounds(400,420, 100, 30);
 		
-		jB5_export.setBounds(430, 420, 150, 30);
+		jB5_export.setBounds(595, 300, 150, 30);
 		
 		
 		
@@ -115,6 +126,8 @@ public class MainFrame extends JFrame{
 		panel1.add(jL2);
 		panel1.add(jL3);
 		panel1.add(jL4);
+		panel1.add(jL5_musikName);
+		panel1.add(jL6_zeile);
 		panel1.add(jB1_openCSV);
 		panel1.add(jB2_storeCSV);
 		panel1.add(jB3_editor);
@@ -148,8 +161,9 @@ public class MainFrame extends JFrame{
 			int returnVal=chooser.showOpenDialog(jB1_openCSV);
 			if (returnVal==JFileChooser.APPROVE_OPTION) {
 				csvFilePath=chooser.getSelectedFile().getAbsolutePath();
-//				String path=chooser.getSelectedFile().getName();
-//				komplettArray=LadeDatei.csvRead2DArray(path);
+				musikName=chooser.getSelectedFile().getName();
+				jL5_musikName.setText("Musikname: "+musikName);
+//				komplettArray=LadeDatei.csvRead2DArray(musikName);
 				System.out.println(csvFilePath);
 				musikArray=LadeDatei.csvRead(csvFilePath);
 //				System.out.println(musikArray);
@@ -210,6 +224,71 @@ public class MainFrame extends JFrame{
 		
 	}
 	
+	class jButton4_kompositon_Listener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+
+	class jButton5_export_Listener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			JFileChooser chooser=new JFileChooser();
+			FileNameExtensionFilter ff=new FileNameExtensionFilter("*.mp3", "mp3");
+			chooser.setFileFilter(ff);
+			int returnVal=chooser.showOpenDialog(jB5_export);
+			if (returnVal==JFileChooser.APPROVE_OPTION) {
+				File file=chooser.getSelectedFile();
+				if (!file.getPath().endsWith(".mp3")) {
+					file=new File(file.getPath()+".mp3");
+				}
+				//MusikExportieren export=new MusikExportieren();
+				
+			}
+		}
+		
+	}
+
+	class jB6_addline_Listener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			int row=jT.getSelectedRow();
+			Editor editor=new Editor(musikArray);
+			DefaultTableModel model=(DefaultTableModel) jT.getModel();
+			if (jT.isEnabled()==true) {
+				model.insertRow(row+1, emptyLine);
+				editor.AddLine(row+1);
+			}
+			jT.addMouseListener(new mouseClick_Listener());
+		}
+		
+	}
+	
+	class jB7_deleteline_Listener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			int row=jT.getSelectedRow();
+			if(row!=-1) {
+				Editor editor=new Editor(musikArray);
+				DefaultTableModel model=(DefaultTableModel) jT.getModel();
+				model.removeRow(row);
+				editor.DeleteLine(row);
+			}
+			
+		}
+		
+	}
+	
 	/**
 	 * Edit on JTbale
 	 * if there is an update, 
@@ -243,8 +322,10 @@ public class MainFrame extends JFrame{
 			// TODO Auto-generated method stub
 			// Record the data in the cell before 
 			// entering the edit state Auto-generated method stub
+			jL6_zeile.setText("Takt: "+(jT.getSelectedRow()+1));
 			oldCellValue = jT.getValueAt(jT.getSelectedRow(),jT.getSelectedColumn()).toString();
 			System.out.println("old:"+oldCellValue+" r:"+jT.getSelectedRow()+" c:"+jT.getSelectedColumn());
+			
 		}
 
 		@Override
