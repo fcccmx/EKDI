@@ -32,11 +32,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
+import javax.swing.text.Document;
 
 import team.ekdi1.musik.musikeditor.Editor;
 import team.ekdi1.musik.musikexportieren.MusikExportieren;
 import team.ekdi1.musik.musikplayer.LadeDatei;
 import team.ekdi1.musik.musikplayer.Musikspieler;
+import team.ekdi1.musik.musikplayer.StatusAbfrage;
 
 
 public class MainFrame extends JFrame{
@@ -60,6 +62,7 @@ public class MainFrame extends JFrame{
 	JButton jB5_export=new JButton("MP3 exportieren");
 	JButton jB6_addline=new JButton("Eine Zeile hinzufügen");
 	JButton jB7_deleteline=new JButton("Eine Zeile löschen");
+	JButton jB8_Play=new JButton("Play");
 	String[] columnNames= {"Kanal1","Kanal2","Kanal3","Kanal4"};
 	String[] emptyLine= {"","","",""};
 	String[][] komplettArray=new String[64][4];
@@ -113,7 +116,8 @@ public class MainFrame extends JFrame{
 		jB6_addline.addActionListener(new jB6_addline_Listener());
 		jB7_deleteline.setBounds(180, 500, 160, 30);
 		jB7_deleteline.addActionListener(new jB7_deleteline_Listener());
-		
+		jB8_Play.setBounds(50, 390, 100, 30);
+		jB8_Play.addActionListener(new jB8_play_Listener());
 		jB4_kompositon.setBounds(400,420, 100, 30);
 		
 		jB5_export.setBounds(595, 300, 150, 30);
@@ -135,6 +139,7 @@ public class MainFrame extends JFrame{
 		panel1.add(jB5_export);
 		panel1.add(jB6_addline);
 		panel1.add(jB7_deleteline);
+		panel1.add(jB8_Play);
 		
 		DefaultTableModel model=new DefaultTableModel(columnNames,0);
 		jT=new JTable(model);
@@ -177,6 +182,8 @@ public class MainFrame extends JFrame{
 				jT.setEnabled(false);
 				jT.setBackground(new Color(228, 228,228));
 				jScrollPanel.getViewport().add(jT);
+				
+				
 			}
 		}
 	}
@@ -289,6 +296,18 @@ public class MainFrame extends JFrame{
 		
 	}
 	
+	class jB8_play_Listener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			Musikspieler mS = new Musikspieler("F");
+			mS.MusikspielerSchleife();
+		}
+		
+	}
+
+	
 	/**
 	 * Edit on JTbale
 	 * if there is an update, 
@@ -362,6 +381,8 @@ public class MainFrame extends JFrame{
 			playStatus=(JTextField) e.getSource();
 			Musikspieler mS = new Musikspieler(playStatus.getText());
 			mS.MusikspielerSchleife();
+			String s= playStatus.getText().trim();
+			mS.statusAbfrage=new StatusAbfrage(s);
 		}
 		
 	}

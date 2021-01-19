@@ -3,7 +3,7 @@ package team.ekdi1.musik.musikplayer;
 import java.util.ArrayList;
 
 public class Musikspieler{
-	StatusAbfrage statusAbfrage = new StatusAbfrage();	
+	public StatusAbfrage statusAbfrage = new StatusAbfrage();	
 
 	private String[][] liedArray;
 

@@ -6,7 +6,7 @@ public class StatusAbfrage extends Thread{
 	public String status = "P";
 
 	
-	StatusAbfrage(String status) {
+	public StatusAbfrage(String status) {
 		this.status=status;
 	}
 	
