@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import java.util.*;
 
+
+
+import team.ekdi1.musik.musikplayer.*;
 public class Komponix {
 	
 	public ArrayList<String> Randomarray(int takt) {
@@ -11,7 +14,7 @@ public class Komponix {
 		Random r=new Random();
 		for (int i = 0; i < takt; i++) {
 			for (int j = 0; j < 4; j++) {
-				randomArray.add(Integer.toString(r.nextInt(46)+1));
+				randomArray.add(Integer.toHexString(r.nextInt(46)+1));
 			}
 		}
 		return randomArray;
@@ -22,6 +25,8 @@ public class Komponix {
 		Komponix t=new Komponix();
 		rA=t.Randomarray(20);
 		System.out.println(rA);
+		
+		LadeDatei.csvWrite(rA, "C:\\Users\\jsste\\eclipse-workspace\\ekdi2\\EKDI\\Musik_EKDI1\\src\\team\\ekdi1\\musik\\musikplayer\\song2.txt");
 		
 	}
 }
