@@ -5,13 +5,13 @@ import java.io.DataInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import it.sauronsoftware.jave.AudioAttributes;
-import it.sauronsoftware.jave.AudioInfo;
-import it.sauronsoftware.jave.Encoder;
-import it.sauronsoftware.jave.EncoderException;
-import it.sauronsoftware.jave.EncodingAttributes;
-import it.sauronsoftware.jave.InputFormatException;
-import it.sauronsoftware.jave.MultimediaInfo;
+import ws.schild.jave.Encoder;
+import ws.schild.jave.EncoderException;
+import ws.schild.jave.InputFormatException;
+import ws.schild.jave.MultimediaObject;
+import ws.schild.jave.encode.AudioAttributes;
+import ws.schild.jave.encode.EncodingAttributes;
+import ws.schild.jave.info.MultimediaInfo;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,14 +34,15 @@ public class WaveAnalyse {
 		
 		public WaveAnalyse(String AudioPath){
 			File audio=new File(AudioPath);
-			Encoder encoder = new Encoder();
+			
 			try {
-				MultimediaInfo t=encoder.getInfo(audio);
-				AudioFormat=t.getFormat();
-				NumChannels=t.getAudio().getChannels();
-				ByteRate=t.getAudio().getBitRate();
-				SampleRate=t.getAudio().getSamplingRate();
-				decoder=t.getAudio().getDecoder();
+				MultimediaObject t=new MultimediaObject(audio);
+				MultimediaInfo info=t.getInfo();
+				AudioFormat=info.getFormat();
+				NumChannels=info.getAudio().getChannels();
+				ByteRate=info.getAudio().getBitRate();
+				SampleRate=info.getAudio().getSamplingRate();
+				decoder=info.getAudio().getDecoder();
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.getStackTrace();
@@ -83,36 +84,36 @@ public class WaveAnalyse {
 //			}
 		}
 		
-		private static File excutechannel(File source, String outFile,int channel) 
-				throws IllegalArgumentException, InputFormatException, EncoderException {
-			File target=new File(outFile);
-			AudioAttributes audio = new AudioAttributes();
-			audio.setCodec("pcm_s16le");
-			audio.setBitRate(Integer.valueOf(1411000));
-			audio.setChannels(Integer.valueOf(channel));
-			audio.setSamplingRate(Integer.valueOf(44100));
-			EncodingAttributes attrs = new EncodingAttributes();
-			attrs.setFormat("wav");
-			attrs.setAudioAttributes(audio);
-			Encoder encoder = new Encoder();
-			encoder.encode(source, target, attrs);
-			return target;
-			
-		}
-		
-		public static boolean changechannel(String Path,int channel) {
-			boolean status =false;
-			File file=new File(Path);
-			try {
-				excutechannel(file,Path,channel);
-				status=true;
-			}catch (Exception e) {
-				// TODO: handle exception
-				status=false;
-				e.printStackTrace();
-			}
-			return status;
-		}
+//		private static File excutechannel(File source, String outFile,int channel) 
+//				throws IllegalArgumentException, InputFormatException, EncoderException {
+//			File target=new File(outFile);
+//			AudioAttributes audio = new AudioAttributes();
+//			audio.setCodec("pcm_s16le");
+//			audio.setBitRate(Integer.valueOf(1411000));
+//			audio.setChannels(Integer.valueOf(channel));
+//			audio.setSamplingRate(Integer.valueOf(44100));
+//			EncodingAttributes attrs = new EncodingAttributes();
+//			attrs.setOutputFormat("wav");
+//			attrs.setAudioAttributes(audio);
+//			Encoder encoder = new Encoder();
+//			encoder.encode(new MultimediaObject(source), target, attrs);
+//			return target;
+//			
+//		}
+//		
+//		public static boolean changechannel(String Path,int channel) {
+//			boolean status =false;
+//			File file=new File(Path);
+//			try {
+//				excutechannel(file,Path,channel);
+//				status=true;
+//			}catch (Exception e) {
+//				// TODO: handle exception
+//				status=false;
+//				e.printStackTrace();
+//			}
+//			return status;
+//		}
 
 //		public void ShowInfo1(){
 //			System.out.println("-----------------WAVE HEAD-------------------");
@@ -135,9 +136,9 @@ public class WaveAnalyse {
 			
 		
 		public static void main(String[] args){
-			WaveAnalyse.changechannel("C:\\Users\\Ïº½È\\Desktop\\TC5.wav", 2);
+			WaveAnalyse t=new WaveAnalyse("C:\\Users\\Ïº½È\\Desktop\\new10.wav");
+			System.out.println(t.NumChannels);
 			
-
 		}
 	}
 

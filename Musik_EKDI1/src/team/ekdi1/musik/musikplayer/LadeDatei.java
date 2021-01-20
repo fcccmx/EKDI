@@ -68,23 +68,24 @@ public class LadeDatei {
 				a++;
 			}			
 			csvFile.flush();
+			csvFile.close();
 		}catch (IOException e) {
-			e.printStackTrace();
-		}finally {
-			if (csvFile!=null) {
-				try {
-					csvFile.close();
-				} catch (Exception e2) {
-					// TODO: handle exception
-					e2.printStackTrace();
-				}
-				
-			}
-		}
+			e.printStackTrace();}
+//		}finally {
+//			if (csvFile!=null) {
+//				try {
+//					csvFile.close();
+//				} catch (Exception e2) {
+//					// TODO: handle exception
+//					e2.printStackTrace();
+//				}
+//				
+//			}
+//		}
 	}
 	
 	
-	public String[][] csvRead2DArray(String fileName) {
+	public static String[][] csvRead2DArray(String fileName) {
 
 		String[][] komplettArray = new String[64][4];
 
