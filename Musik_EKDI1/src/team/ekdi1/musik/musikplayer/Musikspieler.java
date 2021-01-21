@@ -7,7 +7,7 @@ public class Musikspieler{
 	private String[][] liedArray;
 
 	public Musikspieler() {
-		this.statusAbfrage.start();
+//		this.statusAbfrage.start();
 	}
 	
 	public Musikspieler(String status,ArrayList<String> musikArray) {
@@ -17,7 +17,7 @@ public class Musikspieler{
 			liedArray[i/4][i%4]=musikArray.get(i);
 		}
 		System.out.println(this.statusAbfrage.status);
-		this.statusAbfrage.start();
+//		this.statusAbfrage.start();
 	}
 	
 	private int getLiedArrayLength() {

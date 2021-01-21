@@ -9,7 +9,7 @@ import java.util.*;
 import team.ekdi1.musik.musikplayer.*;
 public class Komponix {
 	
-	public ArrayList<String> Randomarray(int takt) {
+	public static ArrayList<String> Randomarray(int takt) {
 		ArrayList<String> randomArray = new ArrayList<String>();
 		Random r=new Random();
 		for (int i = 0; i < takt; i++) {
