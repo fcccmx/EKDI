@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class StatusAbfrage extends Thread{
 	public String status = "P";
-
 	
 	public StatusAbfrage(String status) {
 		this.status=status;
@@ -13,7 +12,6 @@ public class StatusAbfrage extends Thread{
 	StatusAbfrage() {
 		
 	}
-	
 
 	@Override
 	public void run() {

@@ -9,6 +9,8 @@ import java.awt.Frame;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -26,16 +29,26 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
+import javax.swing.text.Element;
+import javax.swing.text.Position;
+import javax.swing.text.Segment;
 
+import team.ekdi1.musik.komponix.Komponix;
 import team.ekdi1.musik.musikeditor.Editor;
 import team.ekdi1.musik.musikexportieren.MusikExportieren;
+import team.ekdi1.musik.musikexportieren.WavKomposition;
 import team.ekdi1.musik.musikplayer.LadeDatei;
 import team.ekdi1.musik.musikplayer.Musikspieler;
 import team.ekdi1.musik.musikplayer.StatusAbfrage;
@@ -46,19 +59,21 @@ public class MainFrame extends JFrame{
 	Scanner Status=new Scanner(System.in);
 	JPanel panel1=new JPanel();
 	JScrollPane jScrollPanel= new JScrollPane();
-	JTextField playStatus=new JTextField("PlayStatus");
+	JTextField jText_playStatus=new JTextField("PlayStatus");
+	JTextField jText_takt=new JTextField();
 	JLabel jL1_states=new JLabel("P. Pause");
 	JLabel jL2=new JLabel("F. Fortsetzen");
 	JLabel jL3=new JLabel("V. Von vorne");
 	JLabel jL4=new JLabel("S. Stop");
 	JLabel jL5_musikName=new JLabel();
 	JLabel jL6_zeile=new JLabel();
+	JLabel jL7_Taktzahl=new JLabel("Taktzahl:");
 	JTable jT=new JTable();
 	JTableHeader jTableHeader1=jT.getTableHeader();
 	JButton jB1_openCSV=new JButton("csvFile-öffnen");
 	JButton jB2_storeCSV=new JButton("csvFile-speichern");
 	JButton jB3_editor=new JButton("Editor");
-	JButton jB4_kompositon=new JButton("kompositon");
+	JButton jB4_kompositon=new JButton("Zufällige Komposition");
 	JButton jB5_export=new JButton("MP3 exportieren");
 	JButton jB6_addline=new JButton("Eine Zeile hinzufügen");
 	JButton jB7_deleteline=new JButton("Eine Zeile löschen");
@@ -70,9 +85,8 @@ public class MainFrame extends JFrame{
     ArrayList<String> musikArray=new ArrayList<String>();
     String oldCellValue=null;
     String musikName=new String();
-
-
-    
+    String Statustext;
+    Musikspieler mS=new Musikspieler();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -94,44 +108,49 @@ public class MainFrame extends JFrame{
         setResizable(false);
         this.setBounds(50,50,800, 600);
 		panel1.setLayout(null);
+				
+		jB8_Play.setBounds(50, 420, 100, 30);
+		jB8_Play.addActionListener(new jB8_play_Listener());
+		jText_playStatus.setBounds(180,420,100,30);
+		jText_playStatus.addKeyListener(new KeyListener()); 
 		
-		playStatus.setBounds(50,420,100,30);
-		playStatus.addActionListener(new TextField_PlayStatus_Listener());
-		jL1_states.setBounds(50, 450, 200, 30);
-		jL2.setBounds(50,470,200,30);
-		jL3.setBounds(50,490,200,30);
-		jL4.setBounds(50,510,200,30);
+		jL1_states.setBounds(180, 450, 200, 30);
+		jL2.setBounds(180,470,200,30);
+		jL3.setBounds(180,490,200,30);
+		jL4.setBounds(180,510,200,30);
 		jL5_musikName.setBounds(50, 40, 300, 50);
 		jL6_zeile.setBounds(450, 40, 100, 50);
 		
 		jB1_openCSV.setBounds(595, 100, 150, 30);
 		jB1_openCSV.addActionListener(new jButton1_openCSVFile_Listener());
-		
-		jB2_storeCSV.setBounds(595, 180, 150, 30);
+		jB2_storeCSV.setBounds(595, 200, 150, 30);
 		jB2_storeCSV.addActionListener(new JButton2_storeCSVFile_Listener());
 		
-		jB3_editor.setBounds(180, 420, 100, 30);
+		jB3_editor.setBounds(310, 420, 100, 30);
 		jB3_editor.addActionListener(new jButton3_editor_Listener());
-		jB6_addline.setBounds(180, 460, 160, 30);
+		jB6_addline.setBounds(310, 460, 160, 30);
 		jB6_addline.addActionListener(new jB6_addline_Listener());
-		jB7_deleteline.setBounds(180, 500, 160, 30);
+		jB7_deleteline.setBounds(310, 500, 160, 30);
 		jB7_deleteline.addActionListener(new jB7_deleteline_Listener());
-		jB8_Play.setBounds(50, 390, 100, 30);
-		jB8_Play.addActionListener(new jB8_play_Listener());
-		jB4_kompositon.setBounds(400,420, 100, 30);
+		
+		jB4_kompositon.setBounds(530,460, 180, 30);
+		jB4_kompositon.addActionListener(new jButton4_kompositon_Listener());
+		jL7_Taktzahl.setBounds(530, 420, 80, 30);
+		jText_takt.setBounds(600, 420, 80, 30);
 		
 		jB5_export.setBounds(595, 300, 150, 30);
-		
-		
+		jB5_export.addActionListener(new jButton5_export_Listener());
 		
 		this.getContentPane().add(panel1,BorderLayout.CENTER);
-		panel1.add(playStatus);
+		panel1.add(jText_playStatus);
+		panel1.add(jText_takt);
 		panel1.add(jL1_states);
 		panel1.add(jL2);
 		panel1.add(jL3);
 		panel1.add(jL4);
 		panel1.add(jL5_musikName);
 		panel1.add(jL6_zeile);
+		panel1.add(jL7_Taktzahl);
 		panel1.add(jB1_openCSV);
 		panel1.add(jB2_storeCSV);
 		panel1.add(jB3_editor);
@@ -145,9 +164,7 @@ public class MainFrame extends JFrame{
 		jT=new JTable(model);
 		jScrollPanel.getViewport().add(jT);
 		jScrollPanel.setBounds(50, 80, 500, 300);
-		panel1.add(jScrollPanel);
-		
-			
+		panel1.add(jScrollPanel);	
 	}
 	
 	/**
@@ -211,6 +228,25 @@ public class MainFrame extends JFrame{
 		}
 		
 	}
+	class JButton2_storeCSVFile_Listener1 implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			JFileChooser chooser=new JFileChooser();
+			FileNameExtensionFilter ff=new FileNameExtensionFilter("*.csv", "csv");
+			chooser.setFileFilter(ff);
+			int returnVal=chooser.showOpenDialog(jB1_openCSV);
+			if (returnVal==JFileChooser.APPROVE_OPTION) {
+				File file=chooser.getSelectedFile();
+				if (!file.getPath().endsWith(".csv")) {
+					file=new File(file.getPath()+".csv");
+				}
+				LadeDatei.csvWrite(musikArray,file.getPath());
+			}
+		}
+		
+	}
 	
 	/**
 	 * Click the editor button and jtable will be editable
@@ -235,12 +271,25 @@ public class MainFrame extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			musikArray=Komponix.Randomarray(Integer.valueOf(jText_takt.getText()));
+			String[][] arrayData=new String[musikArray.size()/4][4];
+			for (int i = 0; i < musikArray.size(); i++) {
+				arrayData[i/4][i%4]=musikArray.get(i);
+			}
+			
+			DefaultTableModel model=new DefaultTableModel(arrayData,columnNames);
+			jT=new JTable(model);
+			jT.setEnabled(false);
+			jT.setBackground(new Color(228, 228,228));
+			jScrollPanel.getViewport().add(jT);
 			
 		}
 		
 	}
-
+	
+	/**
+	 * Compose music and save the format as MP3 to the specified path
+	 */
 	class jButton5_export_Listener implements ActionListener{
 
 		@Override
@@ -255,7 +304,17 @@ public class MainFrame extends JFrame{
 				if (!file.getPath().endsWith(".mp3")) {
 					file=new File(file.getPath()+".mp3");
 				}
-				//MusikExportieren export=new MusikExportieren();
+				try {
+					MusikExportieren export=new MusikExportieren(musikArray,file.getPath());
+					export.concatWav(musikArray);
+					export.WavToMp3(file.getPath());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (UnsupportedAudioFileException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 		}
@@ -301,18 +360,16 @@ public class MainFrame extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			Musikspieler mS = new Musikspieler("F");
+			mS=new Musikspieler("F",musikArray);
 			mS.MusikspielerSchleife();
 		}
 		
 	}
-
 	
 	/**
 	 * Edit on JTbale
 	 * if there is an update, 
 	 * change the value in the same position on the arraylist as well
-	 * 
 	 */
 	class tablecChanged_Listener implements TableModelListener{
 
@@ -373,16 +430,30 @@ public class MainFrame extends JFrame{
 		
 	}
 
-	class TextField_PlayStatus_Listener implements ActionListener{
+	
+	
+	class KeyListener implements java.awt.event.KeyListener{
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
-			playStatus=(JTextField) e.getSource();
-			Musikspieler mS = new Musikspieler(playStatus.getText());
-			mS.MusikspielerSchleife();
-			String s= playStatus.getText().trim();
-			mS.statusAbfrage=new StatusAbfrage(s);
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+				Statustext=jText_playStatus.getText();
+				mS=new Musikspieler(Statustext, musikArray);
+				System.out.println(Statustext);
+			}
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	}
