@@ -1,0 +1,8 @@
+C:\Users\虾饺\git\EKDI\Musik_EKDI1\tonauswahl\Takt\1.wav
+C:\Users\虾饺\git\EKDI\Musik_EKDI1\tonauswahl\silence_1s.wav
+C:\Users\虾饺\git\EKDI\Musik_EKDI1\tonauswahl\Takt\2.wav
+C:\Users\虾饺\git\EKDI\Musik_EKDI1\tonauswahl\silence_1s.wav
+C:\Users\虾饺\git\EKDI\Musik_EKDI1\tonauswahl\Takt\3.wav
+C:\Users\虾饺\git\EKDI\Musik_EKDI1\tonauswahl\silence_1s.wav
+C:\Users\虾饺\git\EKDI\Musik_EKDI1\tonauswahl\Takt\4.wav
+C:\Users\虾饺\git\EKDI\Musik_EKDI1\tonauswahl\silence_1s.wav

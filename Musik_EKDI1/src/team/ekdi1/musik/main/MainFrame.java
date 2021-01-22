@@ -16,8 +16,10 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.Map;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
@@ -28,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -87,6 +90,7 @@ public class MainFrame extends JFrame{
     String musikName=new String();
     String Statustext;
     Musikspieler mS=new Musikspieler();
+    public static Map<JButton, Musikspieler> threadMap = new HashMap<JButton, Musikspieler>(16);
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -359,9 +363,17 @@ public class MainFrame extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			mS=new Musikspieler("F",musikArray);
-			mS.MusikspielerSchleife();
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					mS=new Musikspieler(musikArray);
+//					mS.statusAbfrage.start();
+					mS.MusikspielerSchleife();
+					System.out.println(mS.statusAbfrage.getState());
+				}
+			}).start();			
 		}
 		
 	}
@@ -444,7 +456,7 @@ public class MainFrame extends JFrame{
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 				Statustext=jText_playStatus.getText();
-				mS=new Musikspieler(Statustext, musikArray);
+				mS.statusAbfrage.setStatus(Statustext);
 				System.out.println(Statustext);
 			}
 			

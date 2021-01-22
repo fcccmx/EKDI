@@ -10,14 +10,19 @@ public class Musikspieler{
 //		this.statusAbfrage.start();
 	}
 	
-	public Musikspieler(String status,ArrayList<String> musikArray) {
-		this.statusAbfrage.status=status;
+	public Musikspieler(ArrayList<String> musikArray) {
+		this.statusAbfrage=new StatusAbfrage("F");
 		liedArray=new String[musikArray.size()/4][4];
 		for (int i = 0; i < musikArray.size(); i++) {
-			liedArray[i/4][i%4]=musikArray.get(i);
+			if (musikArray.get(i)=="") {
+				liedArray[i/4][i%4]="silence_0.5s";
+			}else {
+				liedArray[i/4][i%4]=musikArray.get(i);
+			}			
 		}
-		System.out.println(this.statusAbfrage.status);
+		System.out.println(this.statusAbfrage.getState());
 //		this.statusAbfrage.start();
+		
 	}
 	
 	private int getLiedArrayLength() {
@@ -35,8 +40,7 @@ public class Musikspieler{
 		int aktTakt = 0;
 		String state = "PLAY";
 		LadeDatei fL = new LadeDatei();	
-		
-		
+		this.statusAbfrage.start();
 //		this.liedArray = fL.csvRead2DArray("song2.txt");
 
 		
@@ -58,7 +62,7 @@ public class Musikspieler{
 			kanal1Spieler.play(audioFilePath1, audioFilePath2,audioFilePath3,audioFilePath4);	
 			aktTakt++;
 			
-			if (this.statusAbfrage.status.equals("P")) {
+			if( this.statusAbfrage.status.equals("P")) {
 				play = true;
 			}
 			
@@ -68,12 +72,13 @@ public class Musikspieler{
 			
 			if (this.statusAbfrage.status.equals("V")) {
 				aktTakt = 0;
-				this.statusAbfrage.status = "F";
+				this.statusAbfrage.status="F";
 			}
 			
 			
 		}
 		System.out.println("beendet");
+		System .out.println(this.statusAbfrage.getState());
 
 	}
 
@@ -82,10 +87,9 @@ public class Musikspieler{
 	public static void main(String[] args) {
 		ArrayList<String> ar=new ArrayList<String>();
 		ar=LadeDatei.csvRead("C:\\Users\\Ïº½È\\Desktop\\song.csv");
-		Musikspieler mS = new Musikspieler("F",ar);
+		Musikspieler mS = new Musikspieler(ar);
 		mS.MusikspielerSchleife();
-		
-
+		mS.statusAbfrage.setStatus("V");
 	}
 }
 

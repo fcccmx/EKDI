@@ -31,7 +31,7 @@ public class Komponix {
 		rA=t.Randomarray(20);
 		System.out.println(rA);
 		
-//		LadeDatei.csvWrite(rA, "C:\\Users\\jsste\\eclipse-workspace\\ekdi2\\EKDI\\Musik_EKDI1\\src\\team\\ekdi1\\musik\\musikplayer\\song2.txt");
+		LadeDatei.csvWrite(rA, "C:\\Users\\jsste\\eclipse-workspace\\ekdi2\\EKDI\\Musik_EKDI1\\src\\team\\ekdi1\\musik\\musikplayer\\song2.txt");
 		
 	}
 }
