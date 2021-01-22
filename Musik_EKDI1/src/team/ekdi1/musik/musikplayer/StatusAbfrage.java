@@ -7,7 +7,7 @@ import javax.swing.JTextField;
 import team.ekdi1.musik.main.MainFrame;
 
 public class StatusAbfrage extends Thread{
-	public String status = "P";
+	public String status ;
 	public StatusAbfrage() {
 		
 	} 

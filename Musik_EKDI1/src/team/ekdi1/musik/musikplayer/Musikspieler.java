@@ -16,10 +16,13 @@ public class Musikspieler{
 		for (int i = 0; i < musikArray.size(); i++) {
 			if (musikArray.get(i)=="") {
 				liedArray[i/4][i%4]="silence_0.5s";
+				System.out.println(i+":  "+liedArray[i/4][i%4]);
 			}else {
 				liedArray[i/4][i%4]=musikArray.get(i);
+				System.out.println(i+":  "+liedArray[i/4][i%4]);
 			}			
 		}
+		
 		System.out.println(this.statusAbfrage.getState());
 //		this.statusAbfrage.start();
 		
@@ -89,7 +92,6 @@ public class Musikspieler{
 		ar=LadeDatei.csvRead("C:\\Users\\Ïº½È\\Desktop\\song.csv");
 		Musikspieler mS = new Musikspieler(ar);
 		mS.MusikspielerSchleife();
-		mS.statusAbfrage.setStatus("V");
 	}
 }
 

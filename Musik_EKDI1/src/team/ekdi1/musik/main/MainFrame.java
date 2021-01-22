@@ -338,6 +338,7 @@ public class MainFrame extends JFrame{
 				editor.AddLine(row+1);
 			}
 			jT.addMouseListener(new mouseClick_Listener());
+			jT.getModel().addTableModelListener(new tablecChanged_Listener());
 		}
 		
 	}
@@ -354,7 +355,7 @@ public class MainFrame extends JFrame{
 				model.removeRow(row);
 				editor.DeleteLine(row);
 			}
-			
+			jT.getModel().addTableModelListener(new tablecChanged_Listener());
 		}
 		
 	}
