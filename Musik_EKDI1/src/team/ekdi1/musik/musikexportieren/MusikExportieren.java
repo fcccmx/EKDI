@@ -3,6 +3,7 @@ package team.ekdi1.musik.musikexportieren;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,22 +70,23 @@ public class MusikExportieren {
 							System.out.println(command1);	
 							Process process = Runtime.getRuntime().exec(command1);
 							
-//							InputStream errorStream = process.getErrorStream();
-//							InputStreamReader inputStreamReader = new InputStreamReader(errorStream);
-//							BufferedReader br = new BufferedReader(inputStreamReader);
-//							
-//							String str = "";
-//							while ((str = br.readLine()) != null) {
-//								System.out.println(str);	
-//							}			
-//						  	process.waitFor();	
-//							process.destroy();
+							InputStream errorStream = process.getErrorStream();
+							InputStreamReader inputStreamReader = new InputStreamReader(errorStream);
+							BufferedReader br = new BufferedReader(inputStreamReader);
+							
+							String str = "";
+							while ((str = br.readLine()) != null) {
+								System.out.println(str);	
+							}			
+						  	process.waitFor();	
+							process.destroy();
 						} catch (Exception e) {
 						// TODO: handle exception
 						e.printStackTrace();
 						}
 						return wavPath;
-					}					
+					}
+					
 			}	
 		
 	/**
@@ -95,6 +97,7 @@ public class MusikExportieren {
 	public void concatWav(ArrayList<String> komplettArray) {
 		String command;
 		String mixedWavPath=MusikFolder+"mixedWavPath.txt";
+		System.out.println(mixedWavPath);
 		try {
 			File mixedWavPathList=new File(mixedWavPath);
 			if (!mixedWavPathList.exists()) {
@@ -108,9 +111,9 @@ public class MusikExportieren {
 						pathArray.add(MusikFolder+komplettArray.get(i*4+j)+".wav");	
 					}
 				}
-				PathFile.write(mixWav(pathArray,i));
+				PathFile.write("file "+mixWav(pathArray,i).replace("\\", "\\\\"));
 				PathFile.newLine();
-				PathFile.write(silenceWavPath1);
+				PathFile.write("file "+silenceWavPath1.replace("\\", "\\\\"));
 				PathFile.newLine();
 			}
 			PathFile.flush();
@@ -135,6 +138,8 @@ public class MusikExportieren {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+	
 		deleteDirectory(TaktFolder);	
 	}	
 	
@@ -211,15 +216,15 @@ public class MusikExportieren {
 	}
 	
 	public static void main(String[] args){
-//		try {
-//			String output="C:\\Users\\Ïº½È\\Desktop\\nawsl.mp3";
-//		ArrayList<String> ar=new ArrayList<String>();
-//		ar=LadeDatei.csvRead("C:\\Users\\Ïº½È\\Desktop\\song.csv");
-//		MusikExportieren test=new MusikExportieren(ar,output);
-//		test.concatWav(ar);
-//		test.WavToMp3(output);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}	
+		try {
+			String output="C:\\Users\\Ïº½È\\Desktop\\nawsl.mp3";
+		ArrayList<String> ar=new ArrayList<String>();
+		ar=LadeDatei.csvRead("C:\\Users\\Ïº½È\\Desktop\\song.csv");
+		MusikExportieren test=new MusikExportieren(ar,output);
+		test.concatWav(ar);
+		test.WavToMp3(output);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	}
 }
