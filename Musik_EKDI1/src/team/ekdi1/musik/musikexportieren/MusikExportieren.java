@@ -19,15 +19,13 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-
+import it.sauronsoftware.jave.AudioAttributes;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.EncoderException;
+import it.sauronsoftware.jave.EncodingAttributes;
+import it.sauronsoftware.jave.InputFormatException;
 import team.ekdi1.musik.musikplayer.LadeDatei;
-import ws.schild.jave.Encoder;
-import ws.schild.jave.EncoderException;
-import ws.schild.jave.InputFormatException;
-import ws.schild.jave.MultimediaObject;
-import ws.schild.jave.encode.AudioAttributes;
-import ws.schild.jave.encode.EncodingAttributes;
-import ws.schild.jave.process.ffmpeg.FFMPEGProcess;
+
 
 public class MusikExportieren {
 	private String wavfilepath;
@@ -36,7 +34,7 @@ public class MusikExportieren {
 	String silenceWavPath1=MusikFolder+"silence_1s.wav";
 	String silenceWavPath2=MusikFolder+"silence_0.5s.wav";
 	private static final String FFmpeg_path=
-			System.getProperty("user.dir") +"\\ffmpeg-N-100653-geb0f532c98-win64-gpl-shared-vulkan\\bin\\ffmpeg.exe";
+			System.getProperty("user.dir")+"\\ffmpeg-N-100653-geb0f532c98-win64-gpl-shared-vulkan\\bin\\ffmpeg.exe";
 	
 	public MusikExportieren(ArrayList<String> ar,String outFile) throws IOException, UnsupportedAudioFileException{
 		this.wavfilepath=outFile.substring(0, outFile.lastIndexOf("."))+".wav";
@@ -81,7 +79,6 @@ public class MusikExportieren {
 						  	process.waitFor();	
 							process.destroy();
 						} catch (Exception e) {
-						// TODO: handle exception
 						e.printStackTrace();
 						}
 						return wavPath;
@@ -150,16 +147,14 @@ public class MusikExportieren {
 			excute(outFile);
 			status=true;
 		}catch (Exception e) {
-			// TODO: handle exception
 			status=false;
 			e.printStackTrace();
 		}
 		return status;
 	}
-	
 
-	private  File excute( String outFile) 
-			throws IllegalArgumentException, InputFormatException, EncoderException {
+	private  File excute(String outFile) 
+			throws IllegalArgumentException, InputFormatException, EncoderException{
 		File source=new File(wavfilepath);
 		File target=new File(outFile);
 		AudioAttributes audio = new AudioAttributes();
@@ -168,12 +163,11 @@ public class MusikExportieren {
 		audio.setChannels(Integer.valueOf(2));
 		audio.setSamplingRate(Integer.valueOf(44100));
 		EncodingAttributes attrs = new EncodingAttributes();
-		attrs.setOutputFormat("mp3");
+		attrs.setFormat("mp3");
 		attrs.setAudioAttributes(audio);
 		Encoder encoder = new Encoder();
-		encoder.encode(new MultimediaObject(source), target, attrs);
-		return target;
-		
+		encoder.encode(source, target, attrs);
+		return target;		
 	}
 	
 	
@@ -217,7 +211,7 @@ public class MusikExportieren {
 	
 	public static void main(String[] args){
 		try {
-			String output="C:\\Users\\Ïº½È\\Desktop\\nawsl.mp3";
+			String output="C:\\Users\\Ïº½È\\Desktop\\song1.mp3";
 		ArrayList<String> ar=new ArrayList<String>();
 		ar=LadeDatei.csvRead("C:\\Users\\Ïº½È\\Desktop\\song.csv");
 		MusikExportieren test=new MusikExportieren(ar,output);

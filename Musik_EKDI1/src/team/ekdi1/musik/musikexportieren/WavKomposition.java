@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import team.ekdi1.musik.musikplayer.LadeDatei;
-import ws.schild.jave.process.ffmpeg.FFMPEGProcess;
+
 
 
 public class WavKomposition {

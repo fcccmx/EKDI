@@ -5,13 +5,10 @@ import java.io.DataInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import ws.schild.jave.Encoder;
-import ws.schild.jave.EncoderException;
-import ws.schild.jave.InputFormatException;
-import ws.schild.jave.MultimediaObject;
-import ws.schild.jave.encode.AudioAttributes;
-import ws.schild.jave.encode.EncodingAttributes;
-import ws.schild.jave.info.MultimediaInfo;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.MultimediaInfo;
+import it.sauronsoftware.jave.AudioAttributes;
+import it.sauronsoftware.jave.AudioInfo;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,10 +31,10 @@ public class WaveAnalyse {
 		
 		public WaveAnalyse(String AudioPath){
 			File audio=new File(AudioPath);
-			
+			Encoder encoder = new Encoder();
 			try {
-				MultimediaObject t=new MultimediaObject(audio);
-				MultimediaInfo info=t.getInfo();
+				
+				MultimediaInfo info=encoder.getInfo(audio);
 				AudioFormat=info.getFormat();
 				NumChannels=info.getAudio().getChannels();
 				ByteRate=info.getAudio().getBitRate();
@@ -136,7 +133,7 @@ public class WaveAnalyse {
 			
 		
 		public static void main(String[] args){
-			WaveAnalyse t=new WaveAnalyse("C:\\Users\\Ïº½È\\Desktop\\new10.wav");
+			WaveAnalyse t=new WaveAnalyse("C:\\Users\\Ïº½È\\Desktop\\12.wav");
 			System.out.println(t.NumChannels);
 			
 		}

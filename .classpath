@@ -7,10 +7,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/虾饺/git/EKDI/Musik_EKDI1/lib/jave-1.0.2.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/虾饺/git/EKDI/Musik_EKDI1/lib/jave-1.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
